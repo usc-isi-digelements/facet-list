@@ -1,7 +1,7 @@
 {
   "name": "facet-list",
   "description": "A Polymer Element that performs an elasticsearch aggregation query and displays the list of results, which can then be used as term filters.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": [
@@ -21,7 +21,7 @@
     "aggregation-display": "DigElements/aggregation-display#^1.0.4",
     "aggregation-sort": "DigElements/aggregation-sort#^1.0.1",
     "elastic-error": "DigElements/elastic-error#1.0.1",
-    "facet-aggregation-query": "DigElements/facet-aggregation-query#^1.0.0",
+    "facet-aggregation-query": "DigElements/facet-aggregation-query#^1.0.1",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "select-all": "DigElements/select-all#^1.0.1",
     "terms-transformer": "DigElements/terms-transformer#^1.0.2"
