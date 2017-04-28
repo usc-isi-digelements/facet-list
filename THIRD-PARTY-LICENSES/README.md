@@ -33,3 +33,9 @@ The following software licenses apply to the listed third-party dependencies:
 #### web-component-tester
 - Copyright (c) 2015 The Polymer Authors
 - https://github.com/Polymer/web-component-tester/blob/master/LICENSE
+
+[License](https://github.com/DigElements/facet-list/blob/master/THIRD-PARTY-LICENSES/MIT)
+
+#### elastic.js
+- Copyright (c) 2012 FullScale Labs, LLC
+- https://opensource.org/licenses/MIT
