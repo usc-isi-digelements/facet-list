@@ -1,0 +1,37 @@
+{
+  "name": "facet-list",
+  "description": "A Polymer Element that performs an elasticsearch aggregation query and displays the list of results, which can then be used as term filters.",
+  "version": "1.0.0",
+  "authors": ["Next Century Corporation"],
+  "license": "Apache-2.0",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "elasticsearch"
+  ],
+  "main": "facet-list.html",
+  "homepage": "https://github.com/DigElements/facet-list/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.7.0",
+    "aggregation-dialog": "DigElements/aggregation-dialog#^1.0.3",
+    "aggregation-display": "DigElements/aggregation-display#^1.0.4",
+    "aggregation-sort": "DigElements/aggregation-sort#^1.0.1",
+    "elastic-error": "DigElements/elastic-error#1.0.1",
+    "facet-aggregation-query": "DigElements/facet-aggregation-query#^1.0.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.10",
+    "select-all": "DigElements/select-all#^1.0.0",
+    "terms-transformer": "DigElements/terms-transformer#^1.0.2"
+  },
+  "devDependencies": {
+    "elastic-client": "DigElements/elastic-client#^1.0.3",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.7",
+    "web-component-tester": "^5.0.0"
+  },
+  "resolutions": {
+    "lodash": "~4.17.2"
+  }
+}
