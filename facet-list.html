@@ -47,6 +47,15 @@ A Polymer Element that performs an elasticsearch aggregation query and displays 
     </facet-list>
 ```
 
+### Styling
+
+`<facet-list>` provides the following custom properties and mixins for styling:
+
+Custom property         | Description                 | Default
+------------------------|-----------------------------|------------------
+`--facet-background-color`  | Color for bars in facet-list | #B0BEC5
+`--primary-text-color`    | Color for text in bars         | #212121
+
 @demo demo/index.html
 -->
 
@@ -60,12 +69,12 @@ A Polymer Element that performs an elasticsearch aggregation query and displays 
 
       aggregation-dialog ::content .bar,
       aggregation-display ::content .bar {
-        background-color: var(--facet-background-color);
+        background-color: var(--facet-background-color, #B0BEC5);
       }
 
       aggregation-dialog ::content .bar-count,
       aggregation-display ::content .bar-count {
-        color: var(--primary-text-color);
+        color: var(--primary-text-color, #212121);
         font-weight: normal;
       }
 

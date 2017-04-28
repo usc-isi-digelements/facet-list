@@ -20,6 +20,15 @@ A Polymer Element that performs an elasticsearch aggregation query and displays 
     </facet-list>
 ```
 
+### Styling
+
+`<facet-list>` provides the following custom properties and mixins for styling:
+
+Custom property         | Description                 | Default
+------------------------|-----------------------------|------------------
+`--facet-background-color`  | Color for bars in facet-list | #B0BEC5
+`--primary-text-color`    | Color for text in bars         | #212121
+
 ### Dependencies
 
 Dependencies are installed using [Bower](http://bower.io/):
