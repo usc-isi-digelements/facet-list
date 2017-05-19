@@ -138,6 +138,7 @@ Custom property         | Description                 | Default
             header-counts-name="[[headerCountsName]]"
             show-checkboxes
             checkbox-name="Search"
+            target="[[target]]"
             limit="{{_aggCount}}"
             order-by="{{_sortOrder}}"
             selected-ids="{{_selectedList}}">
@@ -161,6 +162,7 @@ Custom property         | Description                 | Default
         hide-show-more
         show-checkboxes
         checkbox-name="Search"
+        target="[[target]]"
         text-property="[[textProperty]]"
         data="[[_resultList]]"
         limit="[[limit]]"
@@ -386,6 +388,20 @@ Custom property         | Description                 | Default
           type: String,
           value: 'Ads'
         },
+
+        /**
+         * (Optional)
+         *
+         * The target page of the links.
+         *
+         * @type {String}
+         * @default '_self'
+         */
+        target: {
+          type: String,
+          value: '_self'
+        },
+
         /**
          * Resulting list of items to show in list after combine function is applied to
          * original results returned from elasticsearch.
