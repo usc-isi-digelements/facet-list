@@ -23,7 +23,6 @@ limitations under the License.
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../select-all/select-all.html">
 <link rel="import" href="../terms-transformer/terms-transformer.html">
 
 <!--
@@ -96,7 +95,7 @@ Custom property         | Description                 | Default
       <iron-icon id="list-status-icon" icon$="[[_getToggleIcon(opened)]]"></iron-icon>
     </div>
 
-    <!-- subheading with different options (sorting, select all, etc) along with query for facets list -->
+    <!-- subheading with different options along with query for facets list -->
     <facet-aggregation-query
       name="[[name]]"
       query-builder-config="[[queryBuilderConfig]]"
@@ -107,7 +106,7 @@ Custom property         | Description                 | Default
       index-types="[[indexTypes]]"
       last-error="{{_error}}"
       loading="{{_loading}}"
-      process-request="{{processRequest}}"
+      process-request="[[processRequest]]"
       field="[[aggField]]"
       count="{{_aggCount}}"
       sort-order="{{_sortOrder}}"
@@ -129,17 +128,22 @@ Custom property         | Description                 | Default
       <div class="horizontal layout">
         <div class="flex self-start">
           <aggregation-dialog
+            client="[[client]]"
+            index-name="[[index]]"
+            index-types="[[indexTypes]]"
+            match-all="[[searchOnEmptyParams]]"
+            process-request="[[processRequest]]"
+            query-builder-config="[[queryBuilderConfig]]"
+            search-parameters="[[searchParameters]]"
+            aggregation-field="[[aggField]]"
+            aggregation-name="[[name]]"
+            combine-function="[[combineFunction]]"
             text-property="[[textProperty]]"
-            data="[[_resultList]]"
-            dialog-header="[[_getTitleAndCount(title, _aggCount, _resultList.length)]]"
-            error-message="[[_errorMessage]]"
-            loading="[[_loading]]"
             header-data-name="[[title]]"
             header-counts-name="[[headerCountsName]]"
             show-checkboxes
             checkbox-name="Search"
             target="[[target]]"
-            limit="{{_aggCount}}"
             order-by="{{_sortOrder}}"
             selected-ids="{{_selectedList}}">
           </aggregation-dialog>
@@ -150,12 +154,6 @@ Custom property         | Description                 | Default
           </template>
         </div>
       </div>
-
-      <select-all
-        list="[[_resultList]]"
-        loading="[[_loading]]"
-        selected="{{_selectedList}}">
-      </select-all>
 
       <aggregation-display
         small
@@ -465,6 +463,7 @@ Custom property         | Description                 | Default
          * @private
          */
         _sortOrder: {
+          notify: true,
           type: String,
           value: ''
         }
