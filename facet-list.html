@@ -26,24 +26,39 @@ limitations under the License.
 <link rel="import" href="../terms-transformer/terms-transformer.html">
 
 <!--
-A Polymer Element that performs an elasticsearch aggregation query and displays the list of results, which can then be used as term filters.
+A Polymer Element that performs an ajax query or elasticsearch aggregation query and displays the list of results which can then be used as term filters.
 
-### Example
+### Example that runs elasticsearch queries
 ```html
-    <facet-list
-      name="city"
-      title="Cities"
-      text-property="id"
-      client="[[esclient]]"
-      index="mockads"
-      process-request="{{processRequest}}"
-      search-param-subset="{{searchParameters.city}}"
-      search-parameters="{{searchParameters}}"
-      index-types='["ad"]'
-      combine-function="[[combineFunction]]"
-      agg-field="city"
-      query-builder-config="{{queryBuilderConfig}}">
-    </facet-list>
+<facet-list
+  name="city"
+  title="Cities"
+  text-property="id"
+  client="[[esclient]]"
+  index="mockads"
+  index-types='["ad"]'
+  process-request="[[processRequest]]"
+  search-param-subset="{{searchParameters.city}}"
+  search-parameters="{{searchParameters}}"
+  result-function="[[resultFunction]]"
+  agg-field="city"
+  query-builder-config="[[queryBuilderConfig]]">
+</facet-list>
+```
+
+### Example that runs ajax queries
+```html
+<facet-list
+  name="city"
+  title="Cities"
+  text-property="id"
+  query-url="[[queryUrl]]"
+  process-request="[[processRequest]]"
+  result-function="[[resultFunction]]"
+  search-function="[[searchFunction]]"
+  search-param-subset="{{searchParameters.city}}"
+  search-parameters="{{searchParameters}}">
+</facet-list>
 ```
 
 ### Styling
@@ -97,8 +112,10 @@ Custom property         | Description                 | Default
 
     <!-- subheading with different options along with query for facets list -->
     <facet-aggregation-query
+      query-url="[[queryUrl]]"
       name="[[name]]"
       query-builder-config="[[queryBuilderConfig]]"
+      search-function="[[searchFunction]]"
       search-parameters="[[searchParameters]]"
       match-all="[[searchOnEmptyParams]]"
       client="[[client]]"
@@ -111,7 +128,7 @@ Custom property         | Description                 | Default
       count="{{_aggCount}}"
       sort-order="{{_sortOrder}}"
       result-list="{{_resultList}}"
-      combine-function="[[combineFunction]]">
+      result-function="[[resultFunction]]">
     </facet-aggregation-query>
 
     <elastic-error error="[[_error]]" message="{{_errorMessage}}"></elastic-error>
@@ -128,6 +145,7 @@ Custom property         | Description                 | Default
       <div class="horizontal layout">
         <div class="flex self-start">
           <aggregation-dialog
+            query-url="[[queryUrl]]"
             client="[[client]]"
             index-name="[[index]]"
             index-types="[[indexTypes]]"
@@ -137,7 +155,8 @@ Custom property         | Description                 | Default
             search-parameters="[[searchParameters]]"
             aggregation-field="[[aggField]]"
             aggregation-name="[[name]]"
-            combine-function="[[combineFunction]]"
+            result-function="[[resultFunction]]"
+            search-function="[[searchFunction]]"
             text-property="[[textProperty]]"
             header-data-name="[[title]]"
             header-counts-name="[[headerCountsName]]"
@@ -181,33 +200,47 @@ Custom property         | Description                 | Default
         /**
          * (Required)
          *
-         * The elasticsearch client.
+         * The query URL for the ajax queries.  Not required if the elasticsearch properties are set.
+         *
+         * @type {String}
+         */
+        queryUrl: {
+          type: String
+        },
+
+        /**
+         * (Required)
+         *
+         * The elasticsearch client.  Not required if `queryUrl` and `searchFunction` are set.
          *
          * @type {Object}
          */
         client: {
           type: Object,
         },
+
         /**
          * (Required)
          *
-         * The elasticsearch index to query.
+         * The elasticsearch index to query.  Not required if `queryUrl` and `searchFunction` are set.
          *
          * @type {String}
          */
         index: {
           type: String
         },
+
         /**
          * (Required)
          *
-         * The elasticsearch index types to query.
+         * The elasticsearch index types to query.  Not required if `queryUrl` and `searchFunction` are set.
          *
          * @type {Array}
          */
         indexTypes: {
           type: Array
         },
+
         /**
          * (Required)
          *
@@ -218,6 +251,7 @@ Custom property         | Description                 | Default
         name: {
           type: String
         },
+
         /**
          * (Required)
          *
@@ -228,18 +262,22 @@ Custom property         | Description                 | Default
         title: {
           type: String
         },
+
         /**
          * (Required)
          *
          * Query config object to pass to the facet-aggregation-query element. Consists of unique keys from
          * the searchParameter object mapped to config objects containing {String} field and (Optional)
-         * {String} type.  Default type is "string".  Supported types are "string", "date"
+         * {String} type.  Default type is "string".  Supported types are "string", "date".
+         *
+         * Not required if `queryUrl` and `searchFunction` are set.
          *
          * @type {Object}
          */
         queryBuilderConfig: {
           type: Object
         },
+
         /**
          * (Required)
          *
@@ -250,6 +288,7 @@ Custom property         | Description                 | Default
         searchParameters: {
           type: Object
         },
+
         /**
          * (Required)
          *
@@ -261,6 +300,7 @@ Custom property         | Description                 | Default
           notify: true,
           type: Object
         },
+
         /**
          * (Required)
          *
@@ -268,19 +308,32 @@ Custom property         | Description                 | Default
          *
          * @type {Object}
          */
-        combineFunction: {
+        resultFunction: {
           type: Object
         },
+
         /**
          * (Required)
          *
-         * Field to aggregate on.
+         * The search parameters transform function.  Only required if `queryUrl` is set.
+         *
+         * @type {Object}
+         */
+        searchFunction: {
+          type: Object
+        },
+
+        /**
+         * (Required)
+         *
+         * Field to aggregate on.  Not required if `queryUrl` and `searchFunction` are set.
          *
          * @type {String}
          */
         aggField: {
           type: String
         },
+
         /**
          * (Required)
          *
@@ -292,6 +345,7 @@ Custom property         | Description                 | Default
           notify: true,
           type: Boolean
         },
+
         /**
          * (Optional)
          *
@@ -303,6 +357,7 @@ Custom property         | Description                 | Default
           type: String,
           value: 'text'
         },
+
         /**
          * (Optional)
          *
@@ -313,6 +368,7 @@ Custom property         | Description                 | Default
         imageStyleClass: {
           type: String
         },
+
         /**
          * (Optional)
          *
@@ -325,6 +381,7 @@ Custom property         | Description                 | Default
           type: Number,
           value: 10
         },
+
         /**
          * (Optional)
          *
@@ -337,6 +394,7 @@ Custom property         | Description                 | Default
           type: String,
           value: 'icons:expand-less'
         },
+
         /**
          * (Optional)
          *
@@ -349,6 +407,7 @@ Custom property         | Description                 | Default
           type: String,
           value: 'icons:expand-more'
         },
+
         /**
          * (Optional)
          *
@@ -361,6 +420,7 @@ Custom property         | Description                 | Default
           type: Boolean,
           value: false
         },
+
         /**
          * (Optional)
          *
@@ -374,6 +434,7 @@ Custom property         | Description                 | Default
           type: Boolean,
           value: true
         },
+
         /**
          * (Optional)
          *
@@ -401,7 +462,7 @@ Custom property         | Description                 | Default
         },
 
         /**
-         * Resulting list of items to show in list after combine function is applied to
+         * Resulting list of items to show in list after result function is applied to
          * original results returned from elasticsearch.
          *
          * @type {Array}
@@ -410,6 +471,7 @@ Custom property         | Description                 | Default
         _resultList: {
           type: Array
         },
+
         /**
          * List of checked items.
          *
@@ -419,6 +481,7 @@ Custom property         | Description                 | Default
         _selectedList: {
           type: Array
         },
+
         /**
          * Whether or not the query is loading.
          *
@@ -428,6 +491,7 @@ Custom property         | Description                 | Default
         _loading: {
           type: Boolean
         },
+
         /**
          * Number of results from aggregation query to obtain from elasticsearch.
          *
@@ -437,6 +501,7 @@ Custom property         | Description                 | Default
         _aggCount: {
           type: Number
         },
+
         /**
          * Error returned by elasticsearch (if any).
          *
@@ -446,6 +511,7 @@ Custom property         | Description                 | Default
         _error: {
           type: Object
         },
+
         /**
          * String representation of error message returned by elasticsearch (if any).
          *
@@ -455,6 +521,7 @@ Custom property         | Description                 | Default
         _errorMessage: {
           type: String
         },
+
         /**
          * Order in which to sort items shown in list (either default sorting of relevance or alphabetical).
          *

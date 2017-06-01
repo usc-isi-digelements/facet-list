@@ -36,20 +36,19 @@ limitations under the License.
 
         setup(function(done) {
           element = fixture('facet-list-fixture');
+          element.client = {};
           element.name = 'key';
           element.title = 'Title';
           element.index = 'someIndex';
           element.indexTypes = ['type'];
-          element.combineFunction = function() {
+          element.resultFunction = function() {
             return [];
           };
           element.searchParameters = {someFacet: {}, someOtherFacet: {}};
           element.searchParamSubset = {};
           element.aggField = 'someField';
           element.processRequest = true;
-          flush(function() {
-            done();
-          });
+          flush(done);
         });
 
         test('properties are initialized correctly', function() {
@@ -62,6 +61,7 @@ limitations under the License.
           assert.equal(element.headerCountsName, 'Ads');
           assert.equal(element.target, '_self');
           assert.equal(element._sortOrder, '');
+          assert.deepEqual(element._resultList, []);
         });
 
         test('template has expected header elements', function() {

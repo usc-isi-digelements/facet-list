@@ -39,7 +39,7 @@ limitations under the License.
         <li>Search Parameters: {{stringifySearchParameters(searchParameters.*)}}</li>
         <li>Search Parameter Subset: {{stringifySearchParameterSubset(searchParameters.city.*)}}</li>
         <li>Index Types: ["ad"]</li>
-        <li>Combine Function: combineFunction = function(data, property) { // see source code };</li>
+        <li>Result Function: resultFunction = function(data, property) { // see source code };</li>
         <li>Agg Field: 'city'</li>
       </ul>
 
@@ -60,7 +60,7 @@ limitations under the License.
         search-param-subset="{{searchParameters.city}}"
         search-parameters="{{searchParameters}}"
         index-types='["ad"]'
-        combine-function="[[combineFunction]]"
+        result-function="[[resultFunction]]"
         agg-field="city"
         query-builder-config="{{queryBuilderConfig}}">
       </facet-list>
@@ -78,7 +78,7 @@ limitations under the License.
           }
         });
 
-        demo.combineFunction = function(data, property) {
+        demo.resultFunction = function(data, property) {
           if(data && data.aggregations && data.aggregations[property] &&
             data.aggregations[property][property] && data.aggregations[property][property].buckets) {
             return data.aggregations[property][property].buckets.map(function(bucket) {
