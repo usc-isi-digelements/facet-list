@@ -125,7 +125,7 @@ Custom property         | Description                 | Default
       loading="{{_loading}}"
       process-request="[[processRequest]]"
       field="[[aggField]]"
-      count="{{_aggCount}}"
+      count="[[limit]]"
       sort-order="{{_sortOrder}}"
       result-list="{{_resultList}}"
       result-function="[[resultFunction]]">
@@ -490,16 +490,6 @@ Custom property         | Description                 | Default
          */
         _loading: {
           type: Boolean
-        },
-
-        /**
-         * Number of results from aggregation query to obtain from elasticsearch.
-         *
-         * @type {Number}
-         * @private
-         */
-        _aggCount: {
-          type: Number
         },
 
         /**
