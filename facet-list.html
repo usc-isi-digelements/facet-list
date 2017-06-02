@@ -35,7 +35,7 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
   title="Cities"
   text-property="id"
   client="[[esclient]]"
-  index="mockads"
+  index-name="mockads"
   index-types='["ad"]'
   process-request="[[processRequest]]"
   search-param-subset="{{searchParameters.city}}"
@@ -119,7 +119,7 @@ Custom property         | Description                 | Default
       search-parameters="[[searchParameters]]"
       match-all="[[searchOnEmptyParams]]"
       client="[[client]]"
-      index="[[index]]"
+      index-name="[[indexName]]"
       index-types="[[indexTypes]]"
       last-error="{{_error}}"
       loading="{{_loading}}"
@@ -147,7 +147,7 @@ Custom property         | Description                 | Default
           <aggregation-dialog
             query-url="[[queryUrl]]"
             client="[[client]]"
-            index-name="[[index]]"
+            index-name="[[indexName]]"
             index-types="[[indexTypes]]"
             match-all="[[searchOnEmptyParams]]"
             process-request="[[processRequest]]"
@@ -226,7 +226,7 @@ Custom property         | Description                 | Default
          *
          * @type {String}
          */
-        index: {
+        indexName: {
           type: String
         },
 
