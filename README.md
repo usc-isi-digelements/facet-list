@@ -1,23 +1,38 @@
 # facet-list
 
-A Polymer Element that performs an elasticsearch aggregation query and displays the list of results, which can then be used as term filters.
+A Polymer Element that performs an ajax query or elasticsearch aggregation query and displays the list of results which can then be used as term filters.
 
-### Example
+### Example that runs elasticsearch queries
 ```html
-    <facet-list
-      name="city"
-      title="Cities"
-      text-property="id"
-      client="[[esclient]]"
-      index="mockads"
-      process-request="{{processRequest}}"
-      search-param-subset="{{searchParameters.city}}"
-      search-parameters="{{searchParameters}}"
-      index-types='["ad"]'
-      combine-function="[[combineFunction]]"
-      agg-field="city"
-      query-builder-config="{{queryBuilderConfig}}">
-    </facet-list>
+<facet-list
+  name="city"
+  title="Cities"
+  text-property="id"
+  client="[[esclient]]"
+  index-name="mockads"
+  index-types='["ad"]'
+  process-request="[[processRequest]]"
+  search-parameters-property="city"
+  search-parameters="{{searchParameters}}"
+  result-function="[[resultFunction]]"
+  agg-field="city"
+  query-builder-config="[[queryBuilderConfig]]">
+</facet-list>
+```
+
+### Example that runs ajax queries
+```html
+<facet-list
+  name="city"
+  title="Cities"
+  text-property="id"
+  query-url="[[queryUrl]]"
+  process-request="[[processRequest]]"
+  result-function="[[resultFunction]]"
+  search-function="[[searchFunction]]"
+  search-parameters-property="city"
+  search-parameters="{{searchParameters}}">
+</facet-list>
 ```
 
 ### Styling

@@ -44,8 +44,8 @@ limitations under the License.
           element.resultFunction = function() {
             return [];
           };
+          element.searchParametersProperty = 'someFacet';
           element.searchParameters = {someFacet: {}, someOtherFacet: {}};
-          element.searchParamSubset = {};
           element.aggField = 'someField';
           element.processRequest = true;
           flush(done);
@@ -73,11 +73,38 @@ limitations under the License.
           assert.equal(element.$$('iron-icon[id="list-status-icon"]').icon, element.openedIcon);
         });
 
-        test('template has expected elements beneath header', function() {
+        test('does have facet-aggregation-query', function() {
           assert.isNotNull(element.$$('facet-aggregation-query'));
+          // TODO Test properties.
+        });
+
+        test('does have elastic-error', function() {
+          assert.isNotNull(element.$$('elastic-error'));
+        });
+
+        test('does have terms-transformer', function() {
           assert.isNotNull(element.$$('terms-transformer'));
+          assert.equal(element.$$('terms-transformer').category, 'Title');
+          assert.equal(element.$$('terms-transformer').objectProperty, 'someFacet');
+          assert.deepEqual(element.$$('terms-transformer').list, []);
+          assert.deepEqual(element.$$('terms-transformer').object, {
+            someFacet: {},
+            someOtherFacet: {}
+          });
+        });
+
+        test('does have aggregation-dialog', function() {
           assert.isNotNull(element.$$('aggregation-dialog'));
-          assert.isNull(element.$$('aggregation-sort')); // sort will only exist if element._resultList.length > 0
+          // TODO Test properties.
+        });
+
+        test('does have aggregation-display', function() {
+          assert.isNotNull(element.$$('aggregation-display'));
+          // TODO Test properties.
+        });
+
+        test('does not have aggregation-sort if result list is empty', function() {
+          assert.isNull(element.$$('aggregation-sort'));
         });
 
         test('template beneath header still has correct elements when _resultList.length > 0', function(done) {
@@ -123,6 +150,167 @@ limitations under the License.
         test('_getToggleIcon() returns expected value', function() {
           assert.equal(element._getToggleIcon(true), element.openedIcon);
           assert.equal(element._getToggleIcon(false), element.closedIcon);
+        });
+
+        test('changing _selectedList does update searchParameters', function() {
+          // Add first element.
+          element._selectedList = ['id1'];
+
+          assert.deepEqual(element.searchParameters, {
+            someFacet: {
+              id1: {
+                category: 'Title',
+                enabled: true,
+                key: 'id1',
+                text: 'id1'
+              }
+            },
+            someOtherFacet: {}
+          });
+
+          // Add second element.
+          element._selectedList = ['id1', 'id2'];
+
+          assert.deepEqual(element.searchParameters, {
+            someFacet: {
+              id1: {
+                category: 'Title',
+                enabled: true,
+                key: 'id1',
+                text: 'id1'
+              },
+              id2: {
+                category: 'Title',
+                enabled: true,
+                key: 'id2',
+                text: 'id2'
+              }
+            },
+            someOtherFacet: {}
+          });
+
+          // Remove first element.
+          element._selectedList = ['id2'];
+
+          assert.deepEqual(element.searchParameters, {
+            someFacet: {
+              id1: {
+                category: 'Title',
+                enabled: false,
+                key: 'id1',
+                text: 'id1'
+              },
+              id2: {
+                category: 'Title',
+                enabled: true,
+                key: 'id2',
+                text: 'id2'
+              }
+            },
+            someOtherFacet: {}
+          });
+
+          // Remove second element.
+          element._selectedList = [];
+
+          assert.deepEqual(element.searchParameters, {
+            someFacet: {
+              id1: {
+                category: 'Title',
+                enabled: false,
+                key: 'id1',
+                text: 'id1'
+              },
+              id2: {
+                category: 'Title',
+                enabled: false,
+                key: 'id2',
+                text: 'id2'
+              }
+            },
+            someOtherFacet: {}
+          });
+        });
+
+        test('changing searchParameters[searchParametersProperty] does update _selectedList', function() {
+          // Add first element.
+          element.set('searchParameters.someFacet', {
+            id1: {
+              category: 'Title',
+              enabled: true,
+              key: 'id1',
+              text: 'id1'
+            }
+          });
+
+          assert.deepEqual(element._selectedList, ['id1']);
+
+          // Add second element.
+          element.set('searchParameters.someFacet', {
+            id1: {
+              category: 'Title',
+              enabled: true,
+              key: 'id1',
+              text: 'id1'
+            },
+            id2: {
+              category: 'Title',
+              enabled: true,
+              key: 'id2',
+              text: 'id2'
+            }
+          });
+
+          assert.deepEqual(element._selectedList, ['id2', 'id1']);
+
+          // Disable first element.
+          element.set('searchParameters.someFacet', {
+            id1: {
+              category: 'Title',
+              enabled: false,
+              key: 'id1',
+              text: 'id1'
+            },
+            id2: {
+              category: 'Title',
+              enabled: true,
+              key: 'id2',
+              text: 'id2'
+            }
+          });
+
+          assert.deepEqual(element._selectedList, ['id2']);
+
+          // Disable second element.
+          element.set('searchParameters.someFacet', {
+            id1: {
+              category: 'Title',
+              enabled: false,
+              key: 'id1',
+              text: 'id1'
+            },
+            id2: {
+              category: 'Title',
+              enabled: false,
+              key: 'id2',
+              text: 'id2'
+            }
+          });
+
+          assert.deepEqual(element._selectedList, []);
+        });
+
+        test('changing another property in searchParameters does not update _selectedList', function() {
+          element.set('searchParameters.someOtherFacet', {
+            id1: {
+              category: 'Title',
+              enabled: true,
+              key: 'id1',
+              text: 'id1'
+            }
+          });
+
+          assert.deepEqual(element._selectedList, []);
         });
       });
     </script>

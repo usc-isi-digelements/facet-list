@@ -38,7 +38,7 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
   index-name="mockads"
   index-types='["ad"]'
   process-request="[[processRequest]]"
-  search-param-subset="{{searchParameters.city}}"
+  search-parameters-property="city"
   search-parameters="{{searchParameters}}"
   result-function="[[resultFunction]]"
   agg-field="city"
@@ -56,7 +56,7 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
   process-request="[[processRequest]]"
   result-function="[[resultFunction]]"
   search-function="[[searchFunction]]"
-  search-param-subset="{{searchParameters.city}}"
+  search-parameters-property="city"
   search-parameters="{{searchParameters}}">
 </facet-list>
 ```
@@ -136,8 +136,9 @@ Custom property         | Description                 | Default
     <!-- transform the selected facets to the selected ids in the facets list and vice versa -->
     <terms-transformer
       category="[[title]]"
+      object-property="[[searchParametersProperty]]"
       list="{{_selectedList}}"
-      object="{{searchParamSubset}}">
+      object="{{searchParameters}}">
     </terms-transformer>
 
     <!-- display of results from aggregation query that user can check/uncheck -->
@@ -290,15 +291,14 @@ Custom property         | Description                 | Default
         },
 
         /**
-         * (Required)
+         * (Optional)
          *
-         * Subset of searchParameters to pass along to the terms-transformer.
+         * The property in the searchParameters observed by the `terms-transformer`.
          *
-         * @type {Object}
+         * @type {String}
          */
-        searchParamSubset: {
-          notify: true,
-          type: Object
+        searchParametersProperty: {
+          type: String
         },
 
         /**
