@@ -128,7 +128,8 @@ Custom property         | Description                 | Default
       count="[[limit]]"
       sort-order="{{_sortOrder}}"
       result-list="{{_resultList}}"
-      result-function="[[resultFunction]]">
+      result-function="[[resultFunction]]"
+      network-expansion-parameters="[[networkExpansionParameters]]">
     </facet-aggregation-query>
 
     <elastic-error error="[[_error]]" message="{{_errorMessage}}"></elastic-error>
@@ -459,6 +460,27 @@ Custom property         | Description                 | Default
         target: {
           type: String,
           value: '_self'
+        },
+
+        /**
+         * (Required)
+         *
+         * Used to create query request within facet-aggregation-query.
+         * Example structure:
+         *
+         * {
+         *    city: true,
+         *    state: false,
+         *    zip: false
+         * }
+         *
+         * @type {Object}
+         */
+        networkExpansionParameters: {
+          type: Object,
+          value: function() {
+            return {};
+          }
         },
 
         /**

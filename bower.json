@@ -21,7 +21,7 @@
     "aggregation-display": "DigElements/aggregation-display#1.0.14",
     "aggregation-sort": "DigElements/aggregation-sort#1.0.2",
     "elastic-error": "DigElements/elastic-error#1.0.1",
-    "facet-aggregation-query": "DigElements/facet-aggregation-query#1.1.2",
+    "facet-aggregation-query": "DigElements/facet-aggregation-query#DIG-1177",
     "iron-elements": "PolymerElements/iron-elements#^1.0.10",
     "terms-transformer": "DigElements/terms-transformer#1.1.1"
   },
