@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.7.0",
-    "aggregation-dialog": "DigElements/aggregation-dialog#1.2.3",
+    "aggregation-dialog": "DigElements/aggregation-dialog#DIG-1177",
     "aggregation-display": "DigElements/aggregation-display#1.0.14",
     "aggregation-sort": "DigElements/aggregation-sort#1.0.2",
     "elastic-error": "DigElements/elastic-error#1.0.1",
