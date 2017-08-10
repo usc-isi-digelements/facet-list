@@ -115,6 +115,9 @@ Custom property         | Description                 | Default
       query-url="[[queryUrl]]"
       name="[[name]]"
       query-builder-config="[[queryBuilderConfig]]"
+      result-config="[[resultConfig]]"
+      result-function="[[resultFunction]]"
+      search-config="[[searchConfig]]"
       search-function="[[searchFunction]]"
       search-parameters="[[searchParameters]]"
       match-all="[[searchOnEmptyParams]]"
@@ -127,9 +130,7 @@ Custom property         | Description                 | Default
       field="[[aggField]]"
       count="[[limit]]"
       sort-order="{{_sortOrder}}"
-      result-list="{{_resultList}}"
-      result-function="[[resultFunction]]"
-      network-expansion-parameters="[[networkExpansionParameters]]">
+      result-list="{{_resultList}}">
     </facet-aggregation-query>
 
     <elastic-error error="[[_error]]" message="{{_errorMessage}}"></elastic-error>
@@ -157,7 +158,9 @@ Custom property         | Description                 | Default
             search-parameters="[[searchParameters]]"
             aggregation-field="[[aggField]]"
             aggregation-name="[[name]]"
+            result-config="[[resultConfig]]"
             result-function="[[resultFunction]]"
+            search-config="[[searchConfig]]"
             search-function="[[searchFunction]]"
             text-property="[[textProperty]]"
             header-data-name="[[title]]"
@@ -167,7 +170,6 @@ Custom property         | Description                 | Default
             target="[[target]]"
             order-by="{{_sortOrder}}"
             selected-ids="{{_selectedList}}"
-            network-expansion-parameters="[[networkExpansionParameters]]">
           </aggregation-dialog>
         </div>
         <div class="self-end">
@@ -304,6 +306,17 @@ Custom property         | Description                 | Default
         },
 
         /**
+         * (Optional)
+         *
+         * The result config for the result transform function.
+         *
+         * @type {Object}
+         */
+        resultConfig: {
+          type: Object
+        },
+
+        /**
          * (Required)
          *
          * Function used to create final _resultList.
@@ -311,6 +324,17 @@ Custom property         | Description                 | Default
          * @type {Object}
          */
         resultFunction: {
+          type: Object
+        },
+
+        /**
+         * (Optional)
+         *
+         * The search config for the search transform function.
+         *
+         * @type {Object}
+         */
+        searchConfig: {
           type: Object
         },
 
@@ -461,27 +485,6 @@ Custom property         | Description                 | Default
         target: {
           type: String,
           value: '_self'
-        },
-
-        /**
-         * (Required)
-         *
-         * Used to create query request within facet-aggregation-query.
-         * Example structure:
-         *
-         * {
-         *    city: true,
-         *    state: false,
-         *    zip: false
-         * }
-         *
-         * @type {Object}
-         */
-        networkExpansionParameters: {
-          type: Object,
-          value: function() {
-            return {};
-          }
         },
 
         /**
