@@ -15,56 +15,15 @@ limitations under the License.
 -->
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../../elastic-client/elastic-client.html">
-    <link rel="import" href="../facet-list.html">
-  </head>
-  <body unresolved>
-    <template is="dom-bind" id="demo">
-      <p>facet-list example:</p>
-
-      <p>Elasticsearch Status: <span>[[myStatus]]</span></p>
-
-      <p>facet-list properties:</p>
-      <ul>
-        <li>Name: 'city'</li>
-        <li>Title: 'Cities'</li>
-        <li>Text Property: 'id'</li>
-        <li>Index: 'mockads'</li>
-        <li>Process Request: <span>[[processRequest]]</span></li>
-        <li>Query Builder Config: [[stringifyObjectOnChange(queryBuilderConfig.*)]]</li>
-        <li>Search Parameters: [[stringifySearchParameters(searchParameters.*)]]</li>
-        <li>Search Parameters Property: city</li>
-        <li>Index Types: ["ad"]</li>
-        <li>Result Function: resultFunction = function(data, property) { // see source code };</li>
-        <li>Agg Field: 'city'</li>
-      </ul>
-
-      <elastic-client
-        config='{"host": "http://localhost:9200"}'
-        client="{{esclient}}"
-        cluster-status="{{myStatus}}">
-      </elastic-client>
-
-      <facet-list
-        style="width: 200px;"
-        name="city"
-        title="Cities"
-        text-property="id"
-        client="[[esclient]]"
-        index-name="mockads"
-        process-request="{{processRequest}}"
-        search-parameters-property="city"
-        search-parameters="{{searchParameters}}"
-        index-types='["ad"]'
-        result-function="[[resultFunction]]"
-        agg-field="city"
-        query-builder-config="{{queryBuilderConfig}}">
-      </facet-list>
-    </template>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <link rel="import" href="../../elastic-client/elastic-client.html">
+  <link rel="import" href="../facet-list.html">
+</head>
+<body unresolved>
+  <dom-bind id="demo">
     <script>
       (function(document) {
         var demo = document.querySelector('#demo');
@@ -116,5 +75,49 @@ limitations under the License.
         };
       })(document);
     </script>
-  </body>
+
+    <template is="dom-bind">
+      <p>facet-list example:</p>
+
+      <p>Elasticsearch Status: <span>[[myStatus]]</span></p>
+
+      <p>facet-list properties:</p>
+      <ul>
+        <li>Name: 'city'</li>
+        <li>Title: 'Cities'</li>
+        <li>Text Property: 'id'</li>
+        <li>Index: 'mockads'</li>
+        <li>Process Request: <span>[[processRequest]]</span></li>
+        <li>Query Builder Config: [[stringifyObjectOnChange(queryBuilderConfig.*)]]</li>
+        <li>Search Parameters: [[stringifySearchParameters(searchParameters.*)]]</li>
+        <li>Search Parameters Property: city</li>
+        <li>Index Types: ["ad"]</li>
+        <li>Result Function: resultFunction = function(data, property) { // see source code };</li>
+        <li>Agg Field: 'city'</li>
+      </ul>
+
+      <elastic-client
+        config='{"host": "http://localhost:9200"}'
+        client="{{esclient}}"
+        cluster-status="{{myStatus}}">
+      </elastic-client>
+
+      <facet-list
+        style="width: 200px;"
+        name="city"
+        title="Cities"
+        text-property="id"
+        client="[[esclient]]"
+        index-name="mockads"
+        process-request="{{processRequest}}"
+        search-parameters-property="city"
+        search-parameters="{{searchParameters}}"
+        index-types='["ad"]'
+        result-function="[[resultFunction]]"
+        agg-field="city"
+        query-builder-config="{{queryBuilderConfig}}">
+      </facet-list>
+    </template>
+  </dom-bind>
+</body>
 </html>
