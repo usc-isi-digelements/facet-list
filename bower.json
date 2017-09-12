@@ -1,7 +1,7 @@
 {
   "name": "facet-list",
   "description": "A Polymer Element that performs an ajax or ES aggregation query and displays the list of results which can then be used as term filters.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": [
@@ -17,8 +17,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
-    "aggregation-dialog": "DigElements/aggregation-dialog#2.1.0",
-    "aggregation-display": "DigElements/aggregation-display#2.1.0",
+    "aggregation-dialog": "DigElements/aggregation-dialog#2.1.1",
+    "aggregation-display": "DigElements/aggregation-display#2.1.1",
     "aggregation-sort": "DigElements/aggregation-sort#2.0.0",
     "elastic-error": "DigElements/elastic-error#2.0.0",
     "facet-aggregation-query": "DigElements/facet-aggregation-query#2.1.0",
