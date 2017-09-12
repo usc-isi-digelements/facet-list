@@ -106,7 +106,7 @@ Custom property         | Description                 | Default
 
     <!-- title section of facet list -->
     <div id="header" class="layout horizontal facet filter-header" title="Toggle [[title]]" on-tap="toggleList">
-      <span class="flex">[[_getTitleAndCount(title, limit, _resultList.length)]]</span>
+      <span class="flex">[[_getTitleAndCount(title, limit, resultList.length)]]</span>
       <iron-icon id="list-status-icon" icon$="[[_getToggleIcon(opened)]]"></iron-icon>
     </div>
 
@@ -124,13 +124,13 @@ Custom property         | Description                 | Default
       client="[[client]]"
       index-name="[[indexName]]"
       index-types="[[indexTypes]]"
-      last-error="{{_error}}"
+      error="{{_error}}"
       loading="{{_loading}}"
       process-request="[[processRequest]]"
       field="[[aggField]]"
       count="[[limit]]"
       sort-order="{{_sortOrder}}"
-      result-list="{{_resultList}}">
+      result-list="{{resultList}}">
     </facet-aggregation-query>
 
     <elastic-error error="[[_error]]" message="{{_errorMessage}}"></elastic-error>
@@ -139,6 +139,7 @@ Custom property         | Description                 | Default
     <terms-transformer
       category="[[title]]"
       object-property="[[searchParametersProperty]]"
+      text-function="[[textFunction]]"
       list="{{_selectedList}}"
       object="{{searchParameters}}">
     </terms-transformer>
@@ -173,7 +174,7 @@ Custom property         | Description                 | Default
           </aggregation-dialog>
         </div>
         <div class="self-end">
-          <template is="dom-if" if="[[_resultList.length]]">
+          <template is="dom-if" if="[[resultList.length]]">
             <aggregation-sort order-by="{{_sortOrder}}"></aggregation-sort>
           </template>
         </div>
@@ -186,7 +187,7 @@ Custom property         | Description                 | Default
         checkbox-name="Search"
         target="[[target]]"
         text-property="[[textProperty]]"
-        data="[[_resultList]]"
+        data="[[resultList]]"
         limit="[[limit]]"
         error-message="[[_errorMessage]]"
         loading="[[_loading]]"
@@ -319,7 +320,7 @@ Custom property         | Description                 | Default
         /**
          * (Required)
          *
-         * Function used to create final _resultList.
+         * Function used to create final resultList.
          *
          * @type {Object}
          */
@@ -375,7 +376,7 @@ Custom property         | Description                 | Default
         /**
          * (Optional)
          *
-         * Text property in the objects in _resultList to pass along to the aggregation-display.
+         * Text property in the objects in resultList to pass along to the aggregation-display.
          *
          * @type {String}
          */
@@ -488,14 +489,27 @@ Custom property         | Description                 | Default
         },
 
         /**
+         * (Optional|Output)
+         *
          * Resulting list of items to show in list after result function is applied to
          * original results returned from elasticsearch.
          *
          * @type {Array}
-         * @private
          */
-        _resultList: {
+        resultList: {
+          notify: true,
           type: Array
+        },
+
+        /**
+         * (Optional)
+         *
+         * A function to transform the ID into the text for the object.
+         *
+         * @type {Function}
+         */
+        textFunction: {
+          type: Object
         },
 
         /**
@@ -546,7 +560,6 @@ Custom property         | Description                 | Default
          * @private
          */
         _sortOrder: {
-          notify: true,
           type: String,
           value: ''
         }

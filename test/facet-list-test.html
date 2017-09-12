@@ -61,13 +61,13 @@ limitations under the License.
           assert.equal(element.headerCountsName, 'Ads');
           assert.equal(element.target, '_self');
           assert.equal(element._sortOrder, '');
-          assert.deepEqual(element._resultList, []);
+          assert.deepEqual(element.resultList, []);
         });
 
         test('template has expected header elements', function() {
           assert.isNotNull(element.$$('#header'));
           assert.equal(element.$$('#header').title, 'Toggle ' + element.title);
-          assert.isTrue(element.$$('#header').textContent.includes(element._getTitleAndCount(element.title, element._resultList)));
+          assert.isTrue(element.$$('#header').textContent.includes(element._getTitleAndCount(element.title, element.resultList)));
           assert.isNotNull(element.$$('iron-icon[id="list-status-icon"]'));
           assert.equal(element.$$('iron-icon[id="list-status-icon"]').parentNode, element.$$('#header'));
           assert.equal(element.$$('iron-icon[id="list-status-icon"]').icon, element.openedIcon);
@@ -107,8 +107,8 @@ limitations under the License.
           assert.isNull(element.$$('aggregation-sort'));
         });
 
-        test('template beneath header still has correct elements when _resultList.length > 0', function(done) {
-          element._resultList = [{text: 'somekey', count: 1, id: 'somekey'}];
+        test('template beneath header still has correct elements when resultList.length > 0', function(done) {
+          element.resultList = [{text: 'somekey', count: 1, id: 'somekey'}];
 
           flush(function() {
             assert.isNotNull(element.$$('facet-aggregation-query'));
