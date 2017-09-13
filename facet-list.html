@@ -65,10 +65,18 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
 
 `<facet-list>` provides the following custom properties and mixins for styling:
 
-Custom property         | Description                 | Default
-------------------------|-----------------------------|------------------
-`--facet-background-color`  | Color for bars in facet-list | #B0BEC5
-`--primary-text-color`    | Color for text in bars         | #212121
+Custom property                             | Description                                                         | Default
+--------------------------------------------|---------------------------------------------------------------------|--------
+`--facet-list-bar-color`                    | The color of the single or left bars.                               | --paper-grey-300
+`--facet-list-bar-count-color`              | The color of the single or left count labels.                       | --paper-grey-900
+`--facet-list-bar-height`                   | The height of the single or left bars.                              | 20px
+`--facet-list-bar-title-color`              | The color of the single or left title labels.                       | --paper-grey-900
+`--facet-list-bar-title-hover-color`        | The color of the single or left title labels on hover (if a link).  | --paper-grey-600
+`--facet-list-second-bar-color`             | The color of the right (second) bars.                               | --paper-grey-300
+`--facet-list-second-bar-count-color`       | The color of the right (second) count labels.                       | --paper-grey-900
+`--facet-list-second-bar-height`            | The height of the right (second) bars.                              | 20px
+`--facet-list-second-bar-title-color`       | The color of the right (second) title labels.                       | --paper-grey-900
+`--facet-list-second-bar-title-hover-color` | The color of the right (second) title labels on hover (if a link).  | --paper-grey-600
 
 @demo demo/index.html
 -->
@@ -81,17 +89,6 @@ Custom property         | Description                 | Default
         display: block;
       }
 
-      aggregation-dialog ::content .bar,
-      aggregation-display ::content .bar {
-        background-color: var(--facet-background-color, #B0BEC5);
-      }
-
-      aggregation-dialog ::content .bar-count,
-      aggregation-display ::content .bar-count {
-        color: var(--primary-text-color, #212121);
-        font-weight: normal;
-      }
-
       .filter-header {
         cursor: pointer;
         /* Match the font-weight of the Sort label */
@@ -101,6 +98,32 @@ Custom property         | Description                 | Default
 
       .hide {
         display: none;
+      }
+
+      aggregation-dialog {
+        --aggregation-dialog-bar-color: var(--facet-list-bar-color, var(--paper-grey-300));
+        --aggregation-dialog-bar-count-color: var(--facet-list-bar-count-color, var(--paper-grey-900));
+        --aggregation-dialog-bar-height: var(--facet-list-bar-height, 20px);
+        --aggregation-dialog-bar-title-color: var(--facet-list-bar-title-color, var(--paper-grey-900));
+        --aggregation-dialog-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-dialog-second-bar-color: var(--facet-list-second-bar-color, var(--paper-grey-300));
+        --aggregation-dialog-second-bar-count-color: var(--facet-list-second-bar-count-color, var(--paper-grey-900));
+        --aggregation-dialog-second-bar-height: var(--facet-list-second-bar-height, 20px);
+        --aggregation-dialog-second-bar-title-color: var(--facet-list-second-bar-title-color, var(--paper-grey-900));
+        --aggregation-dialog-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-grey-600));
+      }
+
+      aggregation-display {
+        --aggregation-display-bar-color: var(--facet-list-bar-color, var(--paper-grey-300));
+        --aggregation-display-bar-count-color: var(--facet-list-bar-count-color, var(--paper-grey-900));
+        --aggregation-display-bar-height: var(--facet-list-bar-height, 20px);
+        --aggregation-display-bar-title-color: var(--facet-list-bar-title-color, var(--paper-grey-900));
+        --aggregation-display-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-display-second-bar-color: var(--facet-list-second-bar-color, var(--paper-grey-300));
+        --aggregation-display-second-bar-count-color: var(--facet-list-second-bar-count-color, var(--paper-grey-900));
+        --aggregation-display-second-bar-height: var(--facet-list-second-bar-height, 20px);
+        --aggregation-display-second-bar-title-color: var(--facet-list-second-bar-title-color, var(--paper-grey-900));
+        --aggregation-display-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-grey-600));
       }
     </style>
 

@@ -39,10 +39,18 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
 
 `<facet-list>` provides the following custom properties and mixins for styling:
 
-Custom property         | Description                 | Default
-------------------------|-----------------------------|------------------
-`--facet-background-color`  | Color for bars in facet-list | #B0BEC5
-`--primary-text-color`    | Color for text in bars         | #212121
+Custom property                             | Description                                                         | Default
+--------------------------------------------|---------------------------------------------------------------------|--------
+`--facet-list-bar-color`                    | The color of the single or left bars.                               | --paper-grey-300
+`--facet-list-bar-count-color`              | The color of the single or left count labels.                       | --paper-grey-900
+`--facet-list-bar-height`                   | The height of the single or left bars.                              | 20px
+`--facet-list-bar-title-color`              | The color of the single or left title labels.                       | --paper-grey-900
+`--facet-list-bar-title-hover-color`        | The color of the single or left title labels on hover (if a link).  | --paper-grey-600
+`--facet-list-second-bar-color`             | The color of the right (second) bars.                               | --paper-grey-300
+`--facet-list-second-bar-count-color`       | The color of the right (second) count labels.                       | --paper-grey-900
+`--facet-list-second-bar-height`            | The height of the right (second) bars.                              | 20px
+`--facet-list-second-bar-title-color`       | The color of the right (second) title labels.                       | --paper-grey-900
+`--facet-list-second-bar-title-hover-color` | The color of the right (second) title labels on hover (if a link).  | --paper-grey-600
 
 ### Dependencies
 
