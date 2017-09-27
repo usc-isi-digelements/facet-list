@@ -153,6 +153,7 @@ Custom property                             | Description                       
       process-request="[[processRequest]]"
       field="[[aggField]]"
       count="[[limit]]"
+      date-fields="[[dateFields]]"
       sort-order="{{_sortOrder}}"
       result-list="{{resultList}}">
     </facet-aggregation-query>
@@ -193,6 +194,7 @@ Custom property                             | Description                       
             show-checkboxes
             checkbox-name="Search"
             target="[[target]]"
+            date-fields="[[dateFields]]"
             order-by="{{_sortOrder}}"
             selected-ids="{{_selectedList}}"
           </aggregation-dialog>
@@ -533,6 +535,18 @@ Custom property                             | Description                       
          * @type {Function}
          */
         textFunction: {
+          type: Object
+        },
+
+        /**
+         * (Required)
+         *
+         * A collection of date fields mapped to objects containing the {String} `start` and {String} `end` property of each date for the
+         * `query-builder` in `aggregation-dialog` and `facet-aggregation-query`.
+         *
+         * @type {Object}
+         */
+        dateFields: {
           type: Object
         },
 
