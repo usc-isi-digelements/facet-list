@@ -46,6 +46,7 @@ Custom property                             | Description                       
 `--facet-list-bar-height`                   | The height of the single or left bars.                              | 20px
 `--facet-list-bar-title-color`              | The color of the single or left title labels.                       | --paper-grey-900
 `--facet-list-bar-title-hover-color`        | The color of the single or left title labels on hover (if a link).  | --paper-grey-600
+`--facet-list-max-height`                   | The max height of the bar chart.                                    | none
 `--facet-list-second-bar-color`             | The color of the right (second) bars.                               | --paper-grey-300
 `--facet-list-second-bar-count-color`       | The color of the right (second) count labels.                       | --paper-grey-900
 `--facet-list-second-bar-height`            | The height of the right (second) bars.                              | 20px
