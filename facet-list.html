@@ -193,6 +193,7 @@ Custom property                             | Description                       
             text-property="[[textProperty]]"
             header-data-name="[[title]]"
             header-counts-name="[[headerCountsName]]"
+            image-style-class="[[imageStyleClass]]"
             show-checkboxes
             checkbox-name="Search"
             target="[[target]]"
@@ -210,6 +211,7 @@ Custom property                             | Description                       
 
       <aggregation-display
         hide-show-more
+        image-style-class="[[imageStyleClass]]"
         show-checkboxes
         checkbox-name="Search"
         target="[[target]]"
@@ -415,17 +417,6 @@ Custom property                             | Description                       
         /**
          * (Optional)
          *
-         * Image style class for aggregation-dialog (if any).
-         *
-         * @type {String}
-         */
-        imageStyleClass: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
          * Max number shown in list of facets.
          *
          * @type {Number}
@@ -500,6 +491,19 @@ Custom property                             | Description                       
         headerCountsName: {
           type: String,
           value: 'Ads'
+        },
+
+        /**
+         * (Optional)
+         *
+         * The style class for all the images in the display.
+         *
+         * @type {String}
+         * @default ''
+         */
+        imageStyleClass: {
+          type: String,
+          value: ''
         },
 
         /**
