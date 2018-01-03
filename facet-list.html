@@ -150,7 +150,7 @@ Custom property                             | Description                       
       client="[[client]]"
       index-name="[[indexName]]"
       index-types="[[indexTypes]]"
-      error="{{_error}}"
+      error="{{error}}"
       loading="{{_loading}}"
       process-request="[[processRequest]]"
       field="[[aggField]]"
@@ -160,7 +160,7 @@ Custom property                             | Description                       
       result-list="{{resultList}}">
     </facet-aggregation-query>
 
-    <elastic-error error="[[_error]]" message="{{_errorMessage}}"></elastic-error>
+    <elastic-error error="[[error]]" message="{{_errorMessage}}"></elastic-error>
 
     <!-- transform the selected facets to the selected ids in the facets list and vice versa -->
     <terms-transformer
@@ -557,6 +557,16 @@ Custom property                             | Description                       
         },
 
         /**
+         * Error returned by elasticsearch (if any).
+         *
+         * @type {Object}
+         * @private
+         */
+        error: {
+          type: Object
+        },
+
+        /**
          * List of checked items.
          *
          * @type {Array}
@@ -574,16 +584,6 @@ Custom property                             | Description                       
          */
         _loading: {
           type: Boolean
-        },
-
-        /**
-         * Error returned by elasticsearch (if any).
-         *
-         * @type {Object}
-         * @private
-         */
-        _error: {
-          type: Object
         },
 
         /**
