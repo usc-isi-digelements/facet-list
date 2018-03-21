@@ -1,7 +1,7 @@
 {
   "name": "facet-list",
   "description": "A Polymer Element that performs an ajax or ES aggregation query and displays the list of results which can then be used as term filters.",
-  "version": "2.3.5",
+  "version": "2.4.0",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": [
@@ -17,17 +17,17 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
-    "aggregation-dialog": "DigElements/aggregation-dialog#2.4.4",
-    "aggregation-display": "DigElements/aggregation-display#2.4.2",
+    "aggregation-dialog": "DigElements/aggregation-dialog#2.4.5",
+    "aggregation-display": "DigElements/aggregation-display#2.4.4",
     "aggregation-sort": "DigElements/aggregation-sort#2.2.0",
     "elastic-error": "DigElements/elastic-error#2.0.0",
-    "facet-aggregation-query": "DigElements/facet-aggregation-query#2.3.0",
+    "facet-aggregation-query": "DigElements/facet-aggregation-query#2.3.1",
     "iron-collapse": "PolymerElements/iron-collapse#^2.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "iron-icon": "PolymerElements/iron-icon#^2.0.0",
     "iron-icons": "PolymerElements/iron-icons#^2.0.0",
     "paper-styles": "PolymerElements/paper-styles#^2.0.0",
-    "terms-transformer": "DigElements/terms-transformer#2.0.1"
+    "terms-transformer": "DigElements/terms-transformer#2.1.0"
   },
   "devDependencies": {
     "elastic-client": "DigElements/elastic-client#2.1.0",

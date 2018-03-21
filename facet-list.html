@@ -33,7 +33,7 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
 ```html
 <facet-list
   name="city"
-  title="Cities"
+  pretty-name="Cities"
   text-property="id"
   client="[[esclient]]"
   index-name="mockads"
@@ -51,7 +51,7 @@ A Polymer Element that performs an ajax query or elasticsearch aggregation query
 ```html
 <facet-list
   name="city"
-  title="Cities"
+  pretty-name="Cities"
   text-property="id"
   query-url="[[queryUrl]]"
   process-request="[[processRequest]]"
@@ -72,13 +72,13 @@ Custom property                             | Description                       
 `--facet-list-bar-count-color`              | The color of the single or left count labels.                       | --paper-grey-900
 `--facet-list-bar-height`                   | The height of the single or left bars.                              | 20px
 `--facet-list-bar-title-color`              | The color of the single or left title labels.                       | --paper-grey-900
-`--facet-list-bar-title-hover-color`        | The color of the single or left title labels on hover (if a link).  | --paper-grey-600
+`--facet-list-bar-title-hover-color`        | The color of the single or left title labels on hover (if a link).  | --paper-indigo-900
 `--facet-list-max-height`                   | The max height of the bar chart.                                    | none
 `--facet-list-second-bar-color`             | The color of the right (second) bars.                               | --paper-grey-300
 `--facet-list-second-bar-count-color`       | The color of the right (second) count labels.                       | --paper-grey-900
 `--facet-list-second-bar-height`            | The height of the right (second) bars.                              | 20px
 `--facet-list-second-bar-title-color`       | The color of the right (second) title labels.                       | --paper-grey-900
-`--facet-list-second-bar-title-hover-color` | The color of the right (second) title labels on hover (if a link).  | --paper-grey-600
+`--facet-list-second-bar-title-hover-color` | The color of the right (second) title labels on hover (if a link).  | --paper-indigo-900
 
 @demo demo/index.html
 -->
@@ -92,6 +92,7 @@ Custom property                             | Description                       
       }
 
       .filter-header {
+        color: var(--paper-grey-900);
         cursor: pointer;
         /* Match the font-weight of the Sort label */
         font-weight: 500;
@@ -107,12 +108,12 @@ Custom property                             | Description                       
         --aggregation-dialog-bar-count-color: var(--facet-list-bar-count-color, var(--paper-grey-900));
         --aggregation-dialog-bar-height: var(--facet-list-bar-height, 20px);
         --aggregation-dialog-bar-title-color: var(--facet-list-bar-title-color, var(--paper-grey-900));
-        --aggregation-dialog-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-dialog-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-indigo-900));
         --aggregation-dialog-second-bar-color: var(--facet-list-second-bar-color, var(--paper-grey-300));
         --aggregation-dialog-second-bar-count-color: var(--facet-list-second-bar-count-color, var(--paper-grey-900));
         --aggregation-dialog-second-bar-height: var(--facet-list-second-bar-height, 20px);
         --aggregation-dialog-second-bar-title-color: var(--facet-list-second-bar-title-color, var(--paper-grey-900));
-        --aggregation-dialog-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-dialog-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-indigo-900));
       }
 
       aggregation-display {
@@ -120,19 +121,113 @@ Custom property                             | Description                       
         --aggregation-display-bar-count-color: var(--facet-list-bar-count-color, var(--paper-grey-900));
         --aggregation-display-bar-height: var(--facet-list-bar-height, 20px);
         --aggregation-display-bar-title-color: var(--facet-list-bar-title-color, var(--paper-grey-900));
-        --aggregation-display-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-display-bar-title-hover-color: var(--facet-list-bar-title-hover-color, var(--paper-indigo-900));
         --aggregation-display-max-height: var(--facet-list-max-height, none);
         --aggregation-display-second-bar-color: var(--facet-list-second-bar-color, var(--paper-grey-300));
         --aggregation-display-second-bar-count-color: var(--facet-list-second-bar-count-color, var(--paper-grey-900));
         --aggregation-display-second-bar-height: var(--facet-list-second-bar-height, 20px);
         --aggregation-display-second-bar-title-color: var(--facet-list-second-bar-title-color, var(--paper-grey-900));
-        --aggregation-display-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-grey-600));
+        --aggregation-display-second-bar-title-hover-color: var(--facet-list-second-bar-title-hover-color, var(--paper-indigo-900));
+      }
+
+      .icon {
+        --iron-icon-height: 20px;
+        --iron-icon-width: 20px;
+        margin-right: 5px;
+      }
+
+      .icon.amber {
+        color: var(--paper-amber-600);
+      }
+
+      .icon.black {
+        color: #111;
+      }
+
+      .icon.blue {
+        color: var(--paper-blue-600);
+      }
+
+      .icon.blue-grey {
+        color: var(--paper-blue-grey-600);
+      }
+
+      .icon.brown {
+        color: var(--paper-brown-600);
+      }
+
+      .icon.cyan {
+        color: var(--paper-cyan-600);
+      }
+
+      .icon.deep-orange {
+        color: var(--paper-deep-orange-600);
+      }
+
+      .icon.deep-purple {
+        color: var(--paper-deep-purple-600);
+      }
+
+      .icon.green {
+        color: var(--paper-green-600);
+      }
+
+      .icon.grey {
+        color: var(--paper-grey-600);
+      }
+
+      .icon.indigo {
+        color: var(--paper-indigo-600);
+      }
+
+      .icon.light-blue {
+        color: var(--paper-light-blue-600);
+      }
+
+      .icon.light-green {
+        color: var(--paper-light-green-600);
+      }
+
+      .icon.lime {
+        color: var(--paper-lime-600);
+      }
+
+      .icon.orange {
+        color: var(--paper-orange-600);
+      }
+
+      .icon.pink {
+        color: var(--paper-pink-600);
+      }
+
+      .icon.purple {
+        color: var(--paper-purple-600);
+      }
+
+      .icon.red {
+        color: var(--paper-red-600);
+      }
+
+      .icon.teal {
+        color: var(--paper-teal-600);
+      }
+
+      .icon.white {
+        color: #fff;
+      }
+
+      .icon.yellow {
+        color: var(--paper-yellow-600);
       }
     </style>
 
     <!-- title section of facet list -->
-    <div id="header" class="layout horizontal facet filter-header" title="Toggle [[title]]" on-tap="toggleList">
-      <span class="flex">[[_getTitleAndCount(title, limit, resultList.length)]]</span>
+    <div id="header" class="layout horizontal facet filter-header" title="Toggle [[prettyName]]" on-tap="toggleList">
+      <template is="dom-if" if="[[icon]]">
+        <iron-icon class$="icon [[styleClass]]" icon$="[[icon]]" item-icon></iron-icon>
+      </template>
+
+      <span class="flex">[[_getTitleAndCount(prettyName, limit, resultList.length)]]</span>
       <iron-icon id="list-status-icon" icon$="[[_getToggleIcon(opened)]]"></iron-icon>
     </div>
 
@@ -164,7 +259,7 @@ Custom property                             | Description                       
 
     <!-- transform the selected facets to the selected ids in the facets list and vice versa -->
     <terms-transformer
-      category="[[title]]"
+      category="[[prettyName]]"
       object-property="[[searchParametersProperty]]"
       search-default-value="required"
       text-function="[[textFunction]]"
@@ -192,7 +287,7 @@ Custom property                             | Description                       
             search-config="[[searchConfig]]"
             search-function="[[searchFunction]]"
             text-property="[[textProperty]]"
-            header-data-name="[[title]]"
+            header-data-name="[[prettyName]]"
             header-counts-name="[[headerCountsName]]"
             image-style-class="[[imageStyleClass]]"
             show-checkboxes
@@ -279,9 +374,21 @@ Custom property                             | Description                       
         },
 
         /**
+         * (Optional)
+         *
+         * Header icon.
+         *
+         * @type {String}
+         */
+        icon: {
+          type: String,
+          value: ''
+        },
+
+        /**
          * (Required)
          *
-         * Name to use in facet-aggregation-query.
+         * Name for the facet-aggregation-query.
          *
          * @type {String}
          */
@@ -292,12 +399,24 @@ Custom property                             | Description                       
         /**
          * (Required)
          *
-         * Title to display in header.
+         * Header (pretty) name.
          *
          * @type {String}
          */
-        title: {
+        prettyName: {
           type: String
+        },
+
+        /**
+         * (Optional)
+         *
+         * Header icon style class.
+         *
+         * @type {String}
+         */
+        styleClass: {
+          type: String,
+          value: ''
         },
 
         /**
@@ -608,6 +727,20 @@ Custom property                             | Description                       
           type: String,
           value: ''
         }
+      },
+
+      /**
+       * Collapses the facet list.
+       */
+      hideList: function() {
+        this.$$('#list').hide();
+      },
+
+      /**
+       * Expands the facet list.
+       */
+      showList: function() {
+        this.$$('#list').show();
       },
 
       /**
