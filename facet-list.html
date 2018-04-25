@@ -21,9 +21,8 @@ limitations under the License.
 <link rel="import" href="../facet-aggregation-query/facet-aggregation-query.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../iron-icon/iron-icon.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../stylized-icon/stylized-icon.html">
 <link rel="import" href="../terms-transformer/terms-transformer.html">
 
 <!--
@@ -96,7 +95,15 @@ Custom property                             | Description                       
         cursor: pointer;
         /* Match the font-weight of the Sort label */
         font-weight: 500;
-        line-height: 24px;
+        line-height: 20px;
+      }
+
+      .filter-header:hover .list-status-icon {
+        --stylized-icon-color: var(--paper-grey-900);
+      }
+
+      .text-line {
+        margin-bottom: 5px;
       }
 
       .hide {
@@ -131,104 +138,18 @@ Custom property                             | Description                       
       }
 
       .icon {
-        --iron-icon-height: 20px;
-        --iron-icon-width: 20px;
         margin-right: 5px;
-      }
-
-      .icon.amber {
-        color: var(--paper-amber-600);
-      }
-
-      .icon.black {
-        color: #111;
-      }
-
-      .icon.blue {
-        color: var(--paper-blue-600);
-      }
-
-      .icon.blue-grey {
-        color: var(--paper-blue-grey-600);
-      }
-
-      .icon.brown {
-        color: var(--paper-brown-600);
-      }
-
-      .icon.cyan {
-        color: var(--paper-cyan-600);
-      }
-
-      .icon.deep-orange {
-        color: var(--paper-deep-orange-600);
-      }
-
-      .icon.deep-purple {
-        color: var(--paper-deep-purple-600);
-      }
-
-      .icon.green {
-        color: var(--paper-green-600);
-      }
-
-      .icon.grey {
-        color: var(--paper-grey-600);
-      }
-
-      .icon.indigo {
-        color: var(--paper-indigo-600);
-      }
-
-      .icon.light-blue {
-        color: var(--paper-light-blue-600);
-      }
-
-      .icon.light-green {
-        color: var(--paper-light-green-600);
-      }
-
-      .icon.lime {
-        color: var(--paper-lime-600);
-      }
-
-      .icon.orange {
-        color: var(--paper-orange-600);
-      }
-
-      .icon.pink {
-        color: var(--paper-pink-600);
-      }
-
-      .icon.purple {
-        color: var(--paper-purple-600);
-      }
-
-      .icon.red {
-        color: var(--paper-red-600);
-      }
-
-      .icon.teal {
-        color: var(--paper-teal-600);
-      }
-
-      .icon.white {
-        color: #fff;
-      }
-
-      .icon.yellow {
-        color: var(--paper-yellow-600);
       }
     </style>
 
     <!-- title section of facet list -->
-    <div id="header" class="layout horizontal facet filter-header" title="Toggle [[prettyName]]" on-tap="toggleList">
+    <div id="header" class="layout horizontal facet filter-header text-line" title="Toggle [[prettyName]]" on-tap="toggleList">
       <template is="dom-if" if="[[icon]]">
-        <iron-icon class$="icon [[styleClass]]" icon$="[[icon]]" item-icon></iron-icon>
+        <stylized-icon class="icon" icon="[[icon]]" style-class="[[styleClass]]"></stylized-icon>
       </template>
 
       <span class="flex">[[_getTitleAndCount(prettyName, limit, resultList.length)]]</span>
-      <iron-icon id="list-status-icon" icon$="[[_getToggleIcon(opened)]]"></iron-icon>
+      <stylized-icon class="list-status-icon" icon="[[_getToggleIcon(opened)]]"></stylized-icon>
     </div>
 
     <!-- subheading with different options along with query for facets list -->
@@ -269,7 +190,7 @@ Custom property                             | Description                       
 
     <!-- display of results from aggregation query that user can check/uncheck -->
     <iron-collapse id="list" class="filter-list" opened="{{opened}}">
-      <div class="horizontal layout">
+      <div class="horizontal layout text-line">
         <div class="flex self-start">
           <aggregation-dialog
             query-url="[[queryUrl]]"

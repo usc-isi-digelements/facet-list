@@ -63,7 +63,7 @@ limitations under the License.
           assert.equal(element.headerCountsName, 'Results');
           assert.equal(element.target, '_self');
           assert.equal(element._sortOrder, '');
-          assert.deepEqual(element.resultList, []);
+          assert.isUndefined(element.resultList);
         });
 
         test('template has expected header elements', function() {
@@ -71,11 +71,12 @@ limitations under the License.
           assert.equal(element.$$('#header').title, 'Toggle Title');
           assert.isTrue(element.$$('#header').textContent.includes('Title'));
 
-          assert.isNotNull(element.$$('#header iron-icon[icon="polymer"]'));
-          assert.isTrue(element.$$('#header iron-icon[icon="polymer"]').classList.contains('Class'));
+          assert.isNotNull(element.$$('#header stylized-icon.icon'));
+          assert.equal(element.$$('#header stylized-icon.icon').icon, 'polymer');
+          assert.equal(element.$$('#header stylized-icon.icon').styleClass, 'Class');
 
-          assert.isNotNull(element.$$('#header iron-icon[id="list-status-icon"]'));
-          assert.equal(element.$$('#header iron-icon[id="list-status-icon"]').icon, 'icons:expand-less');
+          assert.isNotNull(element.$$('#header stylized-icon.list-status-icon'));
+          assert.equal(element.$$('#header stylized-icon.list-status-icon').icon, 'icons:expand-less');
         });
 
         test('does have facet-aggregation-query', function() {
@@ -140,7 +141,7 @@ limitations under the License.
           flush(function() {
             assert.isFalse(element.opened);
             assert.isFalse(element.$$('iron-collapse[id="list"]').opened);
-            assert.equal(element.$$('iron-icon[id="list-status-icon"]').icon, 'icons:expand-more');
+            assert.equal(element.$$('stylized-icon.list-status-icon').icon, 'icons:expand-more');
             done();
           });
         });
@@ -151,7 +152,7 @@ limitations under the License.
           flush(function() {
             assert.isTrue(element.opened);
             assert.isTrue(element.$$('iron-collapse[id="list"]').opened);
-            assert.equal(element.$$('iron-icon[id="list-status-icon"]').icon, 'icons:expand-less');
+            assert.equal(element.$$('stylized-icon.list-status-icon').icon, 'icons:expand-less');
             done();
           });
         });
@@ -162,7 +163,7 @@ limitations under the License.
           flush(function() {
             assert.isFalse(element.opened);
             assert.isFalse(element.$$('iron-collapse[id="list"]').opened);
-            assert.equal(element.$$('iron-icon[id="list-status-icon"]').icon, 'icons:expand-more');
+            assert.equal(element.$$('stylized-icon.list-status-icon').icon, 'icons:expand-more');
             done();
           });
         });
