@@ -4,7 +4,7 @@ The following software licenses apply to the listed third-party dependencies:
 
 ### Apache 2.0
 
-[License](https://github.com/DigElements/facet-list/blob/master/THIRD-PARTY-LICENSES/APACHE-2.0)
+[License](https://github.com/usc-isi-digelements/facet-list/blob/master/THIRD-PARTY-LICENSES/APACHE-2.0)
 
 #### elasticsearch
 - Copyright (c) 2016 Elasticsearch BV
@@ -12,7 +12,7 @@ The following software licenses apply to the listed third-party dependencies:
 
 ### BSD 3-Clause
 
-[License](https://github.com/DigElements/facet-list/blob/master/THIRD-PARTY-LICENSES/BSD-3-CLAUSE)
+[License](https://github.com/usc-isi-digelements/facet-list/blob/master/THIRD-PARTY-LICENSES/BSD-3-CLAUSE)
 
 #### iron-elements
 - Copyright (c) 2016 The Polymer Project Authors
@@ -34,7 +34,7 @@ The following software licenses apply to the listed third-party dependencies:
 - Copyright (c) 2015 The Polymer Authors
 - https://github.com/Polymer/web-component-tester/blob/master/LICENSE
 
-[License](https://github.com/DigElements/facet-list/blob/master/THIRD-PARTY-LICENSES/MIT)
+[License](https://github.com/usc-isi-digelements/facet-list/blob/master/THIRD-PARTY-LICENSES/MIT)
 
 #### elastic.js
 - Copyright (c) 2012 FullScale Labs, LLC

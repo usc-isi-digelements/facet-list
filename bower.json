@@ -10,26 +10,26 @@
     "elasticsearch"
   ],
   "main": "facet-list.html",
-  "homepage": "https://github.com/DigElements/facet-list/",
+  "homepage": "https://github.com/usc-isi-digelements/facet-list/",
   "ignore": [
     "/.*",
     "/test/"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
-    "aggregation-dialog": "DigElements/aggregation-dialog#2.4.6",
-    "aggregation-display": "DigElements/aggregation-display#2.4.6",
-    "aggregation-sort": "DigElements/aggregation-sort#2.2.1",
-    "elastic-error": "DigElements/elastic-error#2.0.0",
-    "facet-aggregation-query": "DigElements/facet-aggregation-query#2.3.1",
+    "aggregation-dialog": "usc-isi-digelements/aggregation-dialog#2.4.6",
+    "aggregation-display": "usc-isi-digelements/aggregation-display#2.4.6",
+    "aggregation-sort": "usc-isi-digelements/aggregation-sort#2.2.1",
+    "elastic-error": "usc-isi-digelements/elastic-error#2.0.0",
+    "facet-aggregation-query": "usc-isi-digelements/facet-aggregation-query#2.3.1",
     "iron-collapse": "PolymerElements/iron-collapse#^2.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "paper-styles": "PolymerElements/paper-styles#^2.0.0",
-    "stylized-icon": "DigElements/stylized-icon#2.0.0",
-    "terms-transformer": "DigElements/terms-transformer#2.1.0"
+    "stylized-icon": "usc-isi-digelements/stylized-icon#2.0.0",
+    "terms-transformer": "usc-isi-digelements/terms-transformer#2.1.0"
   },
   "devDependencies": {
-    "elastic-client": "DigElements/elastic-client#2.1.0",
+    "elastic-client": "usc-isi-digelements/elastic-client#2.1.0",
     "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
     "web-component-tester": "^6.0.0"
   }
