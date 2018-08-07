@@ -145,7 +145,7 @@ Custom property                             | Description                       
     <!-- title section of facet list -->
     <div id="header" class="layout horizontal facet filter-header text-line" title="Toggle [[prettyName]]" on-tap="toggleList">
       <template is="dom-if" if="[[icon]]">
-        <stylized-icon class="icon" icon="[[icon]]" style-class="[[styleClass]]"></stylized-icon>
+        <stylized-icon class="icon" icon="[[_getIcon(icon)]]" style-class="[[styleClass]]"></stylized-icon>
       </template>
 
       <span class="flex">[[_getTitleAndCount(prettyName, limit, resultList.length)]]</span>
@@ -244,457 +244,475 @@ Custom property                             | Description                       
   </template>
   <script>
   (function() {
-    'use strict';
+  'use strict';
 
-    Polymer({
-      is: 'facet-list',
+  Polymer({
+    is: 'facet-list',
 
-      properties: {
-        /**
-         * (Required)
-         *
-         * The query URL for the ajax queries.  Not required if the elasticsearch properties are set.
-         *
-         * @type {String}
-         */
-        queryUrl: {
-          type: String
-        },
-
-        /**
-         * (Required)
-         *
-         * The elasticsearch client.  Not required if `queryUrl` and `searchFunction` are set.
-         *
-         * @type {Object}
-         */
-        client: {
-          type: Object,
-        },
-
-        /**
-         * (Required)
-         *
-         * The elasticsearch index to query.  Not required if `queryUrl` and `searchFunction` are set.
-         *
-         * @type {String}
-         */
-        indexName: {
-          type: String
-        },
-
-        /**
-         * (Required)
-         *
-         * The elasticsearch index types to query.  Not required if `queryUrl` and `searchFunction` are set.
-         *
-         * @type {Array}
-         */
-        indexTypes: {
-          type: Array
-        },
-
-        /**
-         * (Optional)
-         *
-         * Header icon.
-         *
-         * @type {String}
-         */
-        icon: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Required)
-         *
-         * Name for the facet-aggregation-query.
-         *
-         * @type {String}
-         */
-        name: {
-          type: String
-        },
-
-        /**
-         * (Required)
-         *
-         * Header (pretty) name.
-         *
-         * @type {String}
-         */
-        prettyName: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
-         * Header icon style class.
-         *
-         * @type {String}
-         */
-        styleClass: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Required)
-         *
-         * Query config object to pass to the facet-aggregation-query element. Consists of unique keys from
-         * the searchParameter object mapped to config objects containing {String} field and (Optional)
-         * {String} type.  Default type is "string".  Supported types are "string", "date".
-         *
-         * Not required if `queryUrl` and `searchFunction` are set.
-         *
-         * @type {Object}
-         */
-        queryBuilderConfig: {
-          type: Object
-        },
-
-        /**
-         * (Required)
-         *
-         * The parameters for the query in facet-aggregation-query.
-         *
-         * @type {Object}
-         */
-        searchParameters: {
-          type: Object
-        },
-
-        /**
-         * (Optional)
-         *
-         * The property in the searchParameters observed by the `terms-transformer`.
-         *
-         * @type {String}
-         */
-        searchParametersProperty: {
-          type: String
-        },
-
-        /**
-         * (Optional)
-         *
-         * The result config for the result transform function.
-         *
-         * @type {Object}
-         */
-        resultConfig: {
-          type: Object
-        },
-
-        /**
-         * (Required)
-         *
-         * Function used to create final resultList.
-         *
-         * @type {Object}
-         */
-        resultFunction: {
-          type: Object
-        },
-
-        /**
-         * (Optional)
-         *
-         * The search config for the search transform function.
-         *
-         * @type {Object}
-         */
-        searchConfig: {
-          type: Object
-        },
-
-        /**
-         * (Required)
-         *
-         * The search parameters transform function.  Only required if `queryUrl` is set.
-         *
-         * @type {Object}
-         */
-        searchFunction: {
-          type: Object
-        },
-
-        /**
-         * (Required)
-         *
-         * Field to aggregate on.  Not required if `queryUrl` and `searchFunction` are set.
-         *
-         * @type {String}
-         */
-        aggField: {
-          type: String
-        },
-
-        /**
-         * (Required)
-         *
-         * Whether or not all properties are ready to create the elasticsearch query.
-         *
-         * @type {Boolean}
-         */
-        processRequest: {
-          notify: true,
-          type: Boolean
-        },
-
-        /**
-         * (Optional)
-         *
-         * Text property in the objects in resultList to pass along to the aggregation-display.
-         *
-         * @type {String}
-         */
-        textProperty: {
-          type: String,
-          value: 'text'
-        },
-
-        /**
-         * (Optional)
-         *
-         * Max number shown in list of facets.
-         *
-         * @type {Number}
-         * @default 10
-         */
-        limit: {
-          type: Number,
-          value: 10
-        },
-
-        /**
-         * (Optional)
-         *
-         * Icon to use for when list of facets is opened.
-         *
-         * @type {String}
-         * @default 'icons:expand-less'
-         */
-        openedIcon: {
-          type: String,
-          value: 'icons:expand-less'
-        },
-
-        /**
-         * (Optional)
-         *
-         * Icon to use for when list of facets is collapsed.
-         *
-         * @type {String}
-         * @default 'icons:expand-more'
-         */
-        closedIcon: {
-          type: String,
-          value: 'icons:expand-more'
-        },
-
-        /**
-         * (Optional)
-         *
-         * Whether or not to perform a query when searchParameters are empty.
-         *
-         * @type {Boolean}
-         * @default false
-         */
-        searchOnEmptyParams: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * (Optional)
-         *
-         * Whether or not the list of facets is opened.
-         *
-         * @type {Boolean}
-         * @default true
-         */
-        opened: {
-          notify: true,
-          type: Boolean,
-          value: true
-        },
-
-        /**
-         * (Optional)
-         *
-         * Count type to pass along to aggregation-dialog for text display.
-         *
-         * @type {String}
-         * @default 'Results'
-         */
-        headerCountsName: {
-          type: String,
-          value: 'Results'
-        },
-
-        /**
-         * (Optional)
-         *
-         * The style class for all the images in the display.
-         *
-         * @type {String}
-         * @default ''
-         */
-        imageStyleClass: {
-          type: String,
-          value: ''
-        },
-
-        /**
-         * (Optional)
-         *
-         * The target page of the links.
-         *
-         * @type {String}
-         * @default '_self'
-         */
-        target: {
-          type: String,
-          value: '_self'
-        },
-
-        /**
-         * (Optional|Output)
-         *
-         * Resulting list of items to show in list after result function is applied to
-         * original results returned from elasticsearch.
-         *
-         * @type {Array}
-         */
-        resultList: {
-          notify: true,
-          type: Array
-        },
-
-        /**
-         * (Optional)
-         *
-         * A function to transform the ID into the text for the object.
-         *
-         * @type {Function}
-         */
-        textFunction: {
-          type: Object
-        },
-
-        /**
-         * (Required)
-         *
-         * A collection of date fields mapped to objects containing the {String} `start` and {String} `end` property of each date for the
-         * `query-builder` in `aggregation-dialog` and `facet-aggregation-query`.
-         *
-         * @type {Object}
-         */
-        dateFields: {
-          type: Object
-        },
-
-        /**
-         * Error returned by elasticsearch (if any).
-         *
-         * @type {Object}
-         * @private
-         */
-        error: {
-          type: Object
-        },
-
-        /**
-         * List of checked items.
-         *
-         * @type {Array}
-         * @private
-         */
-        _selectedList: {
-          type: Array
-        },
-
-        /**
-         * Whether or not the query is loading.
-         *
-         * @type {Boolean}
-         * @private
-         */
-        _loading: {
-          type: Boolean
-        },
-
-        /**
-         * String representation of error message returned by elasticsearch (if any).
-         *
-         * @type {String}
-         * @private
-         */
-        _errorMessage: {
-          type: String
-        },
-
-        /**
-         * Order in which to sort items shown in list (either default sorting of relevance or alphabetical).
-         *
-         * @type {String}
-         * @default ''
-         * @private
-         */
-        _sortOrder: {
-          type: String,
-          value: ''
-        }
-      },
-
+    properties: {
       /**
-       * Collapses the facet list.
-       */
-      hideList: function() {
-        this.$$('#list').hide();
-      },
-
-      /**
-       * Expands the facet list.
-       */
-      showList: function() {
-        this.$$('#list').show();
-      },
-
-      /**
-       * Toggles the facet list open or closed.
-       */
-      toggleList: function() {
-        this.$$('#list').toggle();
-      },
-
-      /**
-       * Returns correct text to display as the header of the facet section based on the parameters.
+       * (Required)
        *
-       * @param {String} title
-       * @param {Number} limit
-       * @param {Number} count
-       * @return {String} header text
+       * The query URL for the ajax queries.  Not required if the elasticsearch properties are set.
+       *
+       * @type {String}
+       */
+      queryUrl: {
+        type: String
+      },
+
+      /**
+       * (Required)
+       *
+       * The elasticsearch client.  Not required if `queryUrl` and `searchFunction` are set.
+       *
+       * @type {Object}
+       */
+      client: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * The elasticsearch index to query.  Not required if `queryUrl` and `searchFunction` are set.
+       *
+       * @type {String}
+       */
+      indexName: {
+        type: String
+      },
+
+      /**
+       * (Required)
+       *
+       * The elasticsearch index types to query.  Not required if `queryUrl` and `searchFunction` are set.
+       *
+       * @type {Array}
+       */
+      indexTypes: {
+        type: Array
+      },
+
+      /**
+       * (Optional)
+       *
+       * Header icon.
+       *
+       * @type {String}
+       */
+      icon: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * (Required)
+       *
+       * Name for the facet-aggregation-query.
+       *
+       * @type {String}
+       */
+      name: {
+        type: String
+      },
+
+      /**
+       * (Required)
+       *
+       * Header (pretty) name.
+       *
+       * @type {String}
+       */
+      prettyName: {
+        type: String
+      },
+
+      /**
+       * (Optional)
+       *
+       * Header icon style class.
+       *
+       * @type {String}
+       */
+      styleClass: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * (Required)
+       *
+       * Query config object to pass to the facet-aggregation-query element. Consists of unique keys from
+       * the searchParameter object mapped to config objects containing {String} field and (Optional)
+       * {String} type.  Default type is "string".  Supported types are "string", "date".
+       *
+       * Not required if `queryUrl` and `searchFunction` are set.
+       *
+       * @type {Object}
+       */
+      queryBuilderConfig: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * The parameters for the query in facet-aggregation-query.
+       *
+       * @type {Object}
+       */
+      searchParameters: {
+        type: Object
+      },
+
+      /**
+       * (Optional)
+       *
+       * The property in the searchParameters observed by the `terms-transformer`.
+       *
+       * @type {String}
+       */
+      searchParametersProperty: {
+        type: String
+      },
+
+      /**
+       * (Optional)
+       *
+       * The result config for the result transform function.
+       *
+       * @type {Object}
+       */
+      resultConfig: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * Function used to create final resultList.
+       *
+       * @type {Object}
+       */
+      resultFunction: {
+        type: Object
+      },
+
+      /**
+       * (Optional)
+       *
+       * The search config for the search transform function.
+       *
+       * @type {Object}
+       */
+      searchConfig: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * The search parameters transform function.  Only required if `queryUrl` is set.
+       *
+       * @type {Object}
+       */
+      searchFunction: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * Field to aggregate on.  Not required if `queryUrl` and `searchFunction` are set.
+       *
+       * @type {String}
+       */
+      aggField: {
+        type: String
+      },
+
+      /**
+       * (Required)
+       *
+       * Whether or not all properties are ready to create the elasticsearch query.
+       *
+       * @type {Boolean}
+       */
+      processRequest: {
+        notify: true,
+        type: Boolean
+      },
+
+      /**
+       * (Optional)
+       *
+       * Text property in the objects in resultList to pass along to the aggregation-display.
+       *
+       * @type {String}
+       */
+      textProperty: {
+        type: String,
+        value: 'text'
+      },
+
+      /**
+       * (Optional)
+       *
+       * Max number shown in list of facets.
+       *
+       * @type {Number}
+       * @default 10
+       */
+      limit: {
+        type: Number,
+        value: 10
+      },
+
+      /**
+       * (Optional)
+       *
+       * Icon to use for when list of facets is opened.
+       *
+       * @type {String}
+       * @default 'icons:expand-less'
+       */
+      openedIcon: {
+        type: String,
+        value: 'icons:expand-less'
+      },
+
+      /**
+       * (Optional)
+       *
+       * Icon to use for when list of facets is collapsed.
+       *
+       * @type {String}
+       * @default 'icons:expand-more'
+       */
+      closedIcon: {
+        type: String,
+        value: 'icons:expand-more'
+      },
+
+      /**
+       * (Optional)
+       *
+       * Whether or not to perform a query when searchParameters are empty.
+       *
+       * @type {Boolean}
+       * @default false
+       */
+      searchOnEmptyParams: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * (Optional)
+       *
+       * Whether or not the list of facets is opened.
+       *
+       * @type {Boolean}
+       * @default true
+       */
+      opened: {
+        notify: true,
+        type: Boolean,
+        value: true
+      },
+
+      /**
+       * (Optional)
+       *
+       * Count type to pass along to aggregation-dialog for text display.
+       *
+       * @type {String}
+       * @default 'Results'
+       */
+      headerCountsName: {
+        type: String,
+        value: 'Results'
+      },
+
+      /**
+       * (Optional)
+       *
+       * The style class for all the images in the display.
+       *
+       * @type {String}
+       * @default ''
+       */
+      imageStyleClass: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * (Optional)
+       *
+       * The target page of the links.
+       *
+       * @type {String}
+       * @default '_self'
+       */
+      target: {
+        type: String,
+        value: '_self'
+      },
+
+      /**
+       * (Optional|Output)
+       *
+       * Resulting list of items to show in list after result function is applied to
+       * original results returned from elasticsearch.
+       *
+       * @type {Array}
+       */
+      resultList: {
+        notify: true,
+        type: Array
+      },
+
+      /**
+       * (Optional)
+       *
+       * A function to transform the ID into the text for the object.
+       *
+       * @type {Function}
+       */
+      textFunction: {
+        type: Object
+      },
+
+      /**
+       * (Required)
+       *
+       * A collection of date fields mapped to objects containing the {String} `start` and {String} `end` property of each date for the
+       * `query-builder` in `aggregation-dialog` and `facet-aggregation-query`.
+       *
+       * @type {Object}
+       */
+      dateFields: {
+        type: Object
+      },
+
+      /**
+       * Error returned by elasticsearch (if any).
+       *
+       * @type {Object}
        * @private
        */
-      _getTitleAndCount: function(title, limit, count) {
-        return title + (count ? (count >= limit ? ' (Top ' + limit + ')' : ' (' + count + ')') : '');
+      error: {
+        type: Object
       },
 
       /**
-       * Returns the correct icon to display based on the current status of the 'opened' property.
+       * List of checked items.
        *
-       * @param {Boolean} opened
-       * @return {String} icon
+       * @type {Array}
        * @private
        */
-      _getToggleIcon: function(opened) {
-        return opened === false ? this.closedIcon : this.openedIcon;
+      _selectedList: {
+        type: Array
+      },
+
+      /**
+       * Whether or not the query is loading.
+       *
+       * @type {Boolean}
+       * @private
+       */
+      _loading: {
+        type: Boolean
+      },
+
+      /**
+       * String representation of error message returned by elasticsearch (if any).
+       *
+       * @type {String}
+       * @private
+       */
+      _errorMessage: {
+        type: String
+      },
+
+      /**
+       * Order in which to sort items shown in list (either default sorting of relevance or alphabetical).
+       *
+       * @type {String}
+       * @default ''
+       * @private
+       */
+      _sortOrder: {
+        type: String,
+        value: ''
       }
-    });
-  })();
-  </script>
+    },
+
+    /**
+     * Collapses the facet list.
+     */
+    hideList: function() {
+      this.$$('#list').hide();
+    },
+
+    /**
+     * Expands the facet list.
+     */
+    showList: function() {
+      this.$$('#list').show();
+    },
+
+    /**
+     * Toggles the facet list open or closed.
+     */
+    toggleList: function() {
+      this.$$('#list').toggle();
+    },
+
+    /**
+     * Returns correct text to display as the header of the facet section based on the parameters.
+     *
+     * @param {String} title
+     * @param {Number} limit
+     * @param {Number} count
+     * @return {String} header text
+     * @private
+     */
+    _getTitleAndCount: function(title, limit, count) {
+      return (
+        title +
+        (count
+          ? count >= limit
+            ? ' (Top ' + limit + ')'
+            : ' (' + count + ')'
+          : '')
+      );
+    },
+
+    /**
+     * Returns the correct icon to display based on the current status of the 'opened' property.
+     *
+     * @param {Boolean} opened
+     * @return {String} icon
+     * @private
+     */
+    _getToggleIcon: function(opened) {
+      return opened === false ? this.closedIcon : this.openedIcon;
+    },
+
+    /**
+     * Returns a exact icon or a default icon.
+     *
+     * @param {String} icon
+     * @return {String}
+     * @private
+     */
+    _getIcon: function(icon) {
+      return icon === 'icons:default' ? 'bookmark' : icon;
+    }
+  });
+})();
+</script>
 </dom-module>
